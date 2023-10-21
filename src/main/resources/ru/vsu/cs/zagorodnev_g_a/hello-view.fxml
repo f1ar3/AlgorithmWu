@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="anchorPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="ru.vsu.cs.zagorodnev_g_a.HelloController">
+<AnchorPane fx:id="anchorPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="ru.vsu.cs.zagorodnev_g_a.AlgorithmWuController">
     <children>
     <Canvas fx:id="canvas" height="600" width="800" AnchorPane.topAnchor="30.0" />
     <Slider fx:id="sliderX0" layoutX="846.0" layoutY="80.0" max="800.0" value="400.0" />

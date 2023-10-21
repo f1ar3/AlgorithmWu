@@ -10,7 +10,7 @@ import ru.vsu.cs.zagorodnev_g_a.WuLine.WuLine;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 
-public class HelloController {
+public class AlgorithmWuController {
 
     @FXML
     AnchorPane anchorPane;
