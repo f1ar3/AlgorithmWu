@@ -8,6 +8,7 @@ import javafx.scene.layout.AnchorPane;
 
 import WuLine.WuLine;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Scale;
 
 public class HelloController {
 
@@ -24,14 +25,28 @@ public class HelloController {
     @FXML
     private Slider sliderY1;
     WuLine wuLine = new WuLine();
-//    double x0 = sliderX0.getValue();
-//    double y0 = sliderY0.getValue();
-//    double x1 = sliderX1.getValue();
-//    double y1 = sliderY1.getValue();
     @FXML
     private void initialize() {
         anchorPane.prefWidthProperty().addListener((ov, oldValue, newValue) -> canvas.setWidth(newValue.doubleValue()));
         anchorPane.prefHeightProperty().addListener((ov, oldValue, newValue) -> canvas.setHeight(newValue.doubleValue()));
+
+        canvas.setOnScroll(event -> {
+            double zoomFactor = 1.1;
+            double deltaY = event.getDeltaY();
+
+            if (deltaY < 0) {
+                zoomFactor = 1 / zoomFactor;
+            }
+
+            Scale scale = new Scale();
+            scale.setPivotX(event.getX());
+            scale.setPivotY(event.getY());
+            scale.setX(canvas.getScaleX() * zoomFactor);
+            scale.setY(canvas.getScaleY() * zoomFactor);
+
+            canvas.getTransforms().add(scale);
+            event.consume();
+        });
 
         draw();
 
@@ -47,7 +62,6 @@ public class HelloController {
         sliderY1.valueProperty().addListener((observable, oldValue, newValue) -> {
             draw();
         });
-//        wuLine.drawLine(canvas.getGraphicsContext2D(), x0,y0,x1,y1);
     }
 
     private void draw(){
