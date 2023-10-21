@@ -44,15 +44,15 @@ public class WuLine {
         double xEnd = round(x0);
         double yEnd = y0 + gradient * (xEnd - x0);
         double xGap = rfpart(x0 + 0.5);
-        double xpxl1 = xEnd; // this will be used in the main loop
-        double ypxl1 = ipart(yEnd);
+        double xPxl1 = xEnd; // this will be used in the main loop
+        double yPxl1 = ipart(yEnd);
 
         if (steep) {
-            plot( graphicsContext,ypxl1, xpxl1, rfpart(yEnd) * xGap);
-            plot(graphicsContext,ypxl1 + 1, xpxl1, fpart(yEnd) * xGap);
+            plot( graphicsContext,yPxl1, xPxl1, rfpart(yEnd) * xGap);
+            plot(graphicsContext,yPxl1 + 1, xPxl1, fpart(yEnd) * xGap);
         } else {
-            plot(graphicsContext,xpxl1, ypxl1, rfpart(yEnd) * xGap);
-            plot(graphicsContext,xpxl1, ypxl1 + 1, fpart(yEnd) * xGap);
+            plot(graphicsContext,xPxl1, yPxl1, rfpart(yEnd) * xGap);
+            plot(graphicsContext,xPxl1, yPxl1 + 1, fpart(yEnd) * xGap);
         }
 
         // first y-intersection for the main loop
@@ -74,7 +74,7 @@ public class WuLine {
         }
 
         // main loop
-        for (double x = xpxl1 + 1; x <= xPxl2 - 1; x++) {
+        for (double x = xPxl1 + 1; x <= xPxl2 - 1; x++) {
             if (steep) {
                 plot(graphicsContext,ipart(intersection), x, rfpart(intersection));
                 plot(graphicsContext,ipart(intersection) + 1, x, fpart(intersection));
