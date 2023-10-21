@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="anchorPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="com.example.demo.HelloController">
+    <children>
+    <Canvas fx:id="canvas" height="600" width="800" AnchorPane.topAnchor="30.0" />
+    <Slider fx:id="sliderX0" layoutX="846.0" layoutY="80.0" max="800.0" value="400.0" />
+    <Slider fx:id="sliderY0" layoutX="846.0" layoutY="195.0" max="600.0" value="100.0" />
+    <Slider fx:id="sliderX1" layoutX="846.0" layoutY="310.0" max="800.0" value="500.0" />
+    <Slider fx:id="sliderY1" layoutX="846.0" layoutY="425.0" max="600.0" value="300.0" />
+    <Label layoutX="902.0" layoutY="63.0" prefHeight="17.0" prefWidth="28.0" text="X0" />
+    <Label layoutX="902.0" layoutY="178.0" text="Y0" />
+    <Label layoutX="902.0" layoutY="293.0" text="X1" />
+    <Label layoutX="902.0" layoutY="408.0" text="Y1" />
+    </children>
+</AnchorPane>
