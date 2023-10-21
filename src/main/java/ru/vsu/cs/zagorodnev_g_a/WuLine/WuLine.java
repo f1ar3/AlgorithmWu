@@ -1,4 +1,4 @@
-package WuLine;
+package ru.vsu.cs.zagorodnev_g_a.WuLine;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
