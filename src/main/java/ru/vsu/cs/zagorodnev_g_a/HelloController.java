@@ -1,4 +1,4 @@
-package com.example.demo;
+package ru.vsu.cs.zagorodnev_g_a;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;

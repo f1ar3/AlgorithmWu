@@ -1,4 +1,4 @@
-package com.example.demo;
+package ru.vsu.cs.zagorodnev_g_a;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
