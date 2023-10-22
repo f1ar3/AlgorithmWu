@@ -6,13 +6,6 @@ import javafx.scene.paint.Color;
 
 
 public class WuLine {
-//    private final Canvas canvas;
-//    private final GraphicsContext gc;
-//
-//    public WuLine(Canvas canvas) {
-//        this.canvas = canvas;
-//        this.gc = canvas.getGraphicsContext2D();
-//    }
 
     public void drawLine(GraphicsContext gc, double x0, double y0, double x1, double y1) {
         boolean steep = Math.abs(y1 - y0) > Math.abs(x1 - x0);
