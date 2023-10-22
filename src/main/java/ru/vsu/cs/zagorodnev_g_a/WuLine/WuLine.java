@@ -1,88 +1,103 @@
 package ru.vsu.cs.zagorodnev_g_a.WuLine;
 
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 
-import static java.lang.Math.*;
-
-
 public class WuLine {
+//    private final Canvas canvas;
+//    private final GraphicsContext gc;
+//
+//    public WuLine(Canvas canvas) {
+//        this.canvas = canvas;
+//        this.gc = canvas.getGraphicsContext2D();
+//    }
 
-    void plot(GraphicsContext graphicsContext, double x, double y, double c) {
-        int alpha = (int) (c * 255);
-        graphicsContext.setFill(Color.rgb(0, 0, 0, alpha / 255.0));
-        graphicsContext.fillRect(x, y, 1, 1);
-    }
-
-    int ipart(double x) {
-        return (int) x;
-    }
-
-    double fpart(double x) {
-        return x - floor(x);
-    }
-
-    double rfpart(double x) {
-        return 1.0 - fpart(x);
-    }
-
-    public void drawLine(GraphicsContext graphicsContext,double x0, double y0, double x1, double y1) {
-
-        boolean steep = abs(y1 - y0) > abs(x1 - x0);
-        if (steep)
-            drawLine(graphicsContext,y0, x0, y1, x1);
-
-        if (x0 > x1)
-            drawLine(graphicsContext,x1, y1, x0, y0);
+    public void drawLine(GraphicsContext gc, double x0, double y0, double x1, double y1) {
+        boolean steep = Math.abs(y1 - y0) > Math.abs(x1 - x0);
+        if (steep) {
+            // Swap x0, y0
+            double temp = x0;
+            x0 = y0;
+            y0 = temp;
+            // Swap x1, y1
+            temp = x1;
+            x1 = y1;
+            y1 = temp;
+        }
+        if (x0 > x1) {
+            // Swap x0, x1
+            double temp = x0;
+            x0 = x1;
+            x1 = temp;
+            // Swap y0, y1
+            temp = y0;
+            y0 = y1;
+            y1 = temp;
+        }
 
         double dx = x1 - x0;
         double dy = y1 - y0;
         double gradient = dy / dx;
 
-        // handle first endpoint
-        double xEnd = round(x0);
-        double yEnd = y0 + gradient * (xEnd - x0);
-        double xGap = rfpart(x0 + 0.5);
-        double xPxl1 = xEnd; // this will be used in the main loop
-        double yPxl1 = ipart(yEnd);
+        double xend = Math.round(x0);
+        double yend = y0 + gradient * (xend - x0);
+        double xgap = 1 - fpart(x0 + 0.5);
+        int xpxl1 = (int) xend;
+        int ypxl1 = ipart(yend);
 
         if (steep) {
-            plot( graphicsContext,yPxl1, xPxl1, rfpart(yEnd) * xGap);
-            plot(graphicsContext,yPxl1 + 1, xPxl1, fpart(yEnd) * xGap);
+            plot(gc,ypxl1, xpxl1, rfpart(yend) * xgap);
+            plot(gc,ypxl1 + 1, xpxl1, fpart(yend) * xgap);
         } else {
-            plot(graphicsContext,xPxl1, yPxl1, rfpart(yEnd) * xGap);
-            plot(graphicsContext,xPxl1, yPxl1 + 1, fpart(yEnd) * xGap);
+            plot(gc,xpxl1, ypxl1, rfpart(yend) * xgap);
+            plot(gc,xpxl1, ypxl1 + 1, fpart(yend) * xgap);
         }
 
-        // first y-intersection for the main loop
-        double intersection = yEnd + gradient;
+        double intery = yend + gradient;
 
-        // handle second endpoint
-        xEnd = round(x1);
-        yEnd = y1 + gradient * (xEnd - x1);
-        xGap = fpart(x1 + 0.5);
-        double xPxl2 = xEnd; // this will be used in the main loop
-        double yPxl2 = ipart(yEnd);
+        xend = Math.round(x1);
+        yend = y1 + gradient * (xend - x1);
+        xgap = fpart(x1 + 0.5);
+        int xpxl2 = (int) xend;
+        int ypxl2 = ipart(yend);
 
         if (steep) {
-            plot(graphicsContext,yPxl2, xPxl2, rfpart(yEnd) * xGap);
-            plot( graphicsContext,yPxl2 + 1, xPxl2, fpart(yEnd) * xGap);
+            plot(gc,ypxl2, xpxl2, rfpart(yend) * xgap);
+            plot(gc,ypxl2 + 1, xpxl2, fpart(yend) * xgap);
         } else {
-            plot( graphicsContext,xPxl2, yPxl2, rfpart(yEnd) * xGap);
-            plot( graphicsContext,xPxl2, yPxl2 + 1, fpart(yEnd) * xGap);
+            plot(gc,xpxl2, ypxl2, rfpart(yend) * xgap);
+            plot(gc,xpxl2, ypxl2 + 1, fpart(yend) * xgap);
         }
 
-        // main loop
-        for (double x = xPxl1 + 1; x <= xPxl2 - 1; x++) {
+        for (int x = xpxl1 + 1; x < xpxl2; x++) {
             if (steep) {
-                plot(graphicsContext,ipart(intersection), x, rfpart(intersection));
-                plot(graphicsContext,ipart(intersection) + 1, x, fpart(intersection));
+                plot(gc,ipart(intery), x, rfpart(intery));
+                plot(gc,ipart(intery) + 1, x, fpart(intery));
             } else {
-                plot(graphicsContext,x, ipart(intersection), rfpart(intersection));
-                plot(graphicsContext,x, ipart(intersection) + 1, fpart(intersection));
+                plot(gc, x, ipart(intery), rfpart(intery));
+                plot(gc, x, ipart(intery) + 1, fpart(intery));
             }
-            intersection = intersection + gradient;
+            intery += gradient;
         }
+    }
+
+    private void plot(GraphicsContext gc, int x, int y, double c) {
+        int alpha = (int) (c * 255);
+        gc.setFill(Color.rgb(0, 0, 0, alpha / 255.0));
+        gc.fillRect(x, y, 1, 1);
+    }
+
+    private int ipart(double x) {
+        return (int) x;
+    }
+
+    private double fpart(double x) {
+        return x - Math.floor(x);
+    }
+
+    private double rfpart(double x) {
+        return 1 - fpart(x);
     }
 }
